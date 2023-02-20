@@ -9,7 +9,8 @@ describe('Store controller', () => {
 
     beforeEach(async () => {
         const mockService = {
-            create: jest.fn()
+            create: jest.fn(),
+            findAll: jest.fn()
         }
 
         const module: TestingModule = await Test.createTestingModule({
@@ -55,6 +56,16 @@ describe('Store controller', () => {
             const response = await controller.create(createStoreMock())
       
             expect(response).toEqual(mockReturn);
+        });
+    });
+
+    describe('find all stores', () => {
+        it('should call Store service find all', async () => {
+            const findSpy = jest.spyOn(service, 'findAll');
+
+            await controller.findAll();
+
+            expect(findSpy).toHaveBeenCalled();
         });
     });
 });
