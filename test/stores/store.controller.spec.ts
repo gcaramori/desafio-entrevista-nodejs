@@ -67,5 +67,11 @@ describe('Store controller', () => {
 
             expect(findSpy).toHaveBeenCalled();
         });
+
+        it('should throw if Store service throw errors', async () => {
+            jest.spyOn(service, 'findAll').mockRejectedValueOnce(new Error());
+
+            await expect(controller.findAll()).rejects.toThrow(new Error());
+        });
     });
 });
