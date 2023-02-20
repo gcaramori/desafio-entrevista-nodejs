@@ -46,5 +46,15 @@ describe('Store controller', () => {
       
             await expect(controller.create(createStoreMock())).rejects.toThrow(new Error());
         });
+        
+        it('should return a Store on success', async () => {
+            const mockReturn = mockStore();
+            
+            jest.spyOn(service, 'create').mockResolvedValueOnce(mockReturn);
+      
+            const response = await controller.create(createStoreMock())
+      
+            expect(response).toEqual(mockReturn);
+        });
     });
 });
