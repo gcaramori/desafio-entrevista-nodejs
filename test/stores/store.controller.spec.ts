@@ -30,7 +30,7 @@ describe('Store controller', () => {
         expect(controller).toBeDefined();
     });
 
-    describe('create()', () => {
+    describe('create a store', () => {
         it('should call Store service create with correct values', async () => {
           const createSpy = jest.spyOn(service, 'create');
     
@@ -39,6 +39,12 @@ describe('Store controller', () => {
           await controller.create(mockParam);
     
           expect(createSpy).toHaveBeenCalledWith(mockParam);
+        });
+
+        it('should throw if Store service throw errors', async () => {
+            jest.spyOn(service, 'create').mockRejectedValueOnce(new Error());
+      
+            await expect(controller.create(createStoreMock())).rejects.toThrow(new Error());
         });
     });
 });
