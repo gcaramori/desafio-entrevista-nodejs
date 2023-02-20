@@ -1,8 +1,10 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { StoreModule } from './stores/store.module';
 import { Store } from './stores/entities/store.entity';
 import { AuthenticationModule } from './shared/authentication/authentication.module';
+import { AuthenticationMiddleware } from './shared/middleware/auth.middleware';
 
 @Module({
   imports: [
@@ -17,9 +19,16 @@ import { AuthenticationModule } from './shared/authentication/authentication.mod
       entities: [Store],
       synchronize: true
     }),
-    AuthenticationModule
+    AuthenticationModule,
+    StoreModule
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthenticationMiddleware)
+      .forRoutes('/api/v1');
+  }
+}

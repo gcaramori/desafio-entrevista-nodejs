@@ -100,5 +100,5 @@ describe('Store repository', () => {
     
           expect(deleteSpy).toHaveBeenCalledWith('randomid');
         })
-    })
+    });
 })
