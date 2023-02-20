@@ -23,7 +23,7 @@ describe('Store repository', () => {
                     provide: getRepositoryToken(Store),
                     useValue: mockOrmRepository
                 }
-            ],
+            ]
         }).compile();
         
         repository = moduleRef.get<StoreRepository>(StoreRepository);

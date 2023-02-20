@@ -16,4 +16,8 @@ export class StoreService {
     async findAll(): Promise<Store[]> {
         return this.storeRepository.findAll();
     }
+
+    async findById(id: string): Promise<Store> {
+        return this.storeRepository.findById(id);
+    }
 }

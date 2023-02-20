@@ -21,4 +21,12 @@ export class StoreRepository {
     async findAll(): Promise<Store[]> {
         return this.repository.find();
     }
+
+    async findById(id: string): Promise<Store> {
+        const store = await this.repository.findOne({
+            where: { id: id }
+        });
+
+        return store;
+    }
 }
