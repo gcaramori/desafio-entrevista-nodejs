@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateStoreDTO } from './dto/createStore.dto';
+import { UpdateStoreDTO } from './dto/updateStore.dto';
 import { Store } from './entities/store.entity';
 import { StoreRepository } from './store.repository';
 
@@ -19,5 +20,9 @@ export class StoreService {
 
     async findById(id: string): Promise<Store> {
         return this.storeRepository.findById(id);
+    }
+
+    async update(id: string, updateData: UpdateStoreDTO) {
+        return this.storeRepository.update(id, updateData);
     }
 }

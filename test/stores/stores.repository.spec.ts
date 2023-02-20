@@ -13,7 +13,8 @@ describe('Store repository', () => {
         const mockOrmRepository = {
             create: jest.fn(),
             save: jest.fn(),
-            find: jest.fn()
+            find: jest.fn(),
+            findOne: jest.fn()
         }
 
         const moduleRef = await Test.createTestingModule({
@@ -63,5 +64,17 @@ describe('Store repository', () => {
     
           expect(response).toEqual(mockReturn);
         })
-    })
+    });
+
+    describe('find store by id', () => {
+        it('should return a store', async () => {
+            const mockReturn = mockStore();
+
+            jest.spyOn(ormMock, 'findOne').mockResolvedValueOnce(mockReturn);
+
+            const response = await repository.findById('randomid');
+
+            expect(response).toEqual(mockReturn);
+        })
+    });
 })
