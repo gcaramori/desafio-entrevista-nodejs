@@ -17,4 +17,8 @@ export class StoreRepository {
 
         return store;
     }
+
+    async findAll(): Promise<Store[]> {
+        return this.repository.find();
+    }
 }

@@ -12,4 +12,8 @@ export class StoreService {
     async create(storeData: CreateStoreDTO) {
         return this.storeRepository.create(storeData);
     }
+
+    async findAll(): Promise<Store[]> {
+        return this.storeRepository.findAll();
+    }
 }

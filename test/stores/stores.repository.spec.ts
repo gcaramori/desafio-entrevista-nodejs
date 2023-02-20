@@ -12,7 +12,8 @@ describe('Store repository', () => {
     beforeEach(async () => {
         const mockOrmRepository = {
             create: jest.fn(),
-            save: jest.fn()
+            save: jest.fn(),
+            find: jest.fn()
         }
 
         const moduleRef = await Test.createTestingModule({
@@ -51,4 +52,16 @@ describe('Store repository', () => {
             expect(response.qtyMotorcicles).toBe(20);
         })
     });
+
+    describe('find all stores', () => {
+        it('should return all stores', async () => {
+          const mockReturn = [mockStore()];
+    
+          jest.spyOn(ormMock, 'find').mockResolvedValueOnce(mockReturn);
+    
+          const response = await repository.findAll();
+    
+          expect(response).toEqual(mockReturn);
+        })
+    })
 })
