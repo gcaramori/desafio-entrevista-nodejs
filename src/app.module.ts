@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import Store from './stores/entities/store.entity';
+import { Store } from './stores/entities/store.entity';
+import { AuthenticationModule } from './shared/authentication/authentication.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true
-    }),
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,
@@ -17,7 +16,8 @@ import Store from './stores/entities/store.entity';
       database: process.env.DB_NAME,
       entities: [Store],
       synchronize: true
-    })
+    }),
+    AuthenticationModule
   ],
   controllers: [],
   providers: [],

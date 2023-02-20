@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity('stores')
-class Store {
+export class Store {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -17,8 +17,11 @@ class Store {
     @Column('varchar')
     telephone: string;
     
-    @Column('varchar')
-    type: string;
+    @Column('int')
+    qtyCars: number;
+    
+    @Column('int')
+    qtyMotorcicles: number;
 
     @CreateDateColumn()
     created_at: Date;
@@ -29,5 +32,3 @@ class Store {
     @DeleteDateColumn()
     deleted_at: Date;
 }
-
-export default Store;

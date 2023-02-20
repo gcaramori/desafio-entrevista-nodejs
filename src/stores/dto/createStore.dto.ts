@@ -1,4 +1,4 @@
-export default interface CreateStoreDTO {
+export interface CreateStoreDTO {
     name: string,
     cnpj: string,
     address: string,
