@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { mockStore } from './stores';
+import { mockStore, updateStoreMock } from './stores';
 import { Store } from '../../src/stores/entities/store.entity';
 import { StoreRepository } from '../../src/stores/store.repository';
 
@@ -14,7 +14,8 @@ describe('Store repository', () => {
             create: jest.fn(),
             save: jest.fn(),
             find: jest.fn(),
-            findOne: jest.fn()
+            findOne: jest.fn(),
+            update: jest.fn()
         }
 
         const moduleRef = await Test.createTestingModule({
@@ -75,6 +76,18 @@ describe('Store repository', () => {
             const response = await repository.findById('randomid');
 
             expect(response).toEqual(mockReturn);
+        })
+    });
+
+    describe('update a store', () => {
+        it('should call ormRepository with correct id', async () => {
+            const mockParam = updateStoreMock();
+
+            const updateSpy = jest.spyOn(ormMock, 'update');    
+
+            await repository.update('randomid', mockParam);
+
+            expect(updateSpy).toHaveBeenCalledWith('randomid', mockParam);
         })
     });
 })
