@@ -73,5 +73,15 @@ describe('Store controller', () => {
 
             await expect(controller.findAll()).rejects.toThrow(new Error());
         });
+
+        it('should return an array of Stores on success', async () => {
+            const mockReturn = [mockStore()];
+
+            jest.spyOn(service, 'findAll').mockResolvedValueOnce(mockReturn);
+
+            const response = await controller.findAll();
+
+            expect(response).toEqual(mockReturn);
+        });
     });
 });
