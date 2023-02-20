@@ -34,4 +34,8 @@ export class StoreRepository {
     async update(id: string, updateData: UpdateStoreDTO) {
         await this.repository.update(id, updateData);
     }  
+
+    async delete(id: string) {
+        await this.repository.delete(id);
+    }
 }

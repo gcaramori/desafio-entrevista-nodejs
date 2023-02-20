@@ -15,7 +15,8 @@ describe('Store repository', () => {
             save: jest.fn(),
             find: jest.fn(),
             findOne: jest.fn(),
-            update: jest.fn()
+            update: jest.fn(),
+            delete: jest.fn()
         }
 
         const moduleRef = await Test.createTestingModule({
@@ -80,7 +81,7 @@ describe('Store repository', () => {
     });
 
     describe('update a store', () => {
-        it('should call ormRepository with correct id', async () => {
+        it('should call mockRepository update with correct id', async () => {
             const mockParam = updateStoreMock();
 
             const updateSpy = jest.spyOn(ormMock, 'update');    
@@ -90,4 +91,14 @@ describe('Store repository', () => {
             expect(updateSpy).toHaveBeenCalledWith('randomid', mockParam);
         })
     });
+
+    describe('delete a store', () => {
+        it('should call mockRepository delete with correct id', async () => {
+          const deleteSpy = jest.spyOn(ormMock, 'delete');
+    
+          await repository.delete('randomid');
+    
+          expect(deleteSpy).toHaveBeenCalledWith('randomid');
+        })
+    })
 })

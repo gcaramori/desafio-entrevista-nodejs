@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CreateStoreDTO } from './dto/createStore.dto';
 import { Store } from './entities/store.entity';
 import { StoreService } from './store.service';
@@ -28,5 +28,10 @@ export class StoreController {
     @Put(':id')
     async update(@Param('id') id: string, @Body() updateData: UpdateStoreDTO): Promise<void> {
         return this.storeService.update(id, updateData);
-    } 
+    }
+
+    @Delete(':id')
+    async delete(@Param('id') id: string) {
+        return this.storeService.delete(id);
+    }
 }

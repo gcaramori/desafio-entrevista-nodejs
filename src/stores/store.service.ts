@@ -25,4 +25,8 @@ export class StoreService {
     async update(id: string, updateData: UpdateStoreDTO) {
         return this.storeRepository.update(id, updateData);
     }
+
+    async delete(id: string) {
+        return this.storeRepository.delete(id);
+    }
 }
