@@ -29,4 +29,16 @@ describe('Store controller', () => {
     it('should be defined', () => {
         expect(controller).toBeDefined();
     });
+
+    describe('create()', () => {
+        it('should call Store service create with correct values', async () => {
+          const createSpy = jest.spyOn(service, 'create');
+    
+          const mockParam = createStoreMock();
+    
+          await controller.create(mockParam);
+    
+          expect(createSpy).toHaveBeenCalledWith(mockParam);
+        });
+    });
 });
