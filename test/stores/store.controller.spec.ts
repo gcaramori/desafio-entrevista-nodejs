@@ -43,7 +43,7 @@ describe('Store controller', () => {
           expect(createSpy).toHaveBeenCalledWith(mockParam);
         });
 
-        it('should throw if Store service throw errors', async () => {
+        it('should throw if Store service create throw errors', async () => {
             jest.spyOn(service, 'create').mockRejectedValueOnce(new Error());
       
             await expect(controller.create(createStoreMock())).rejects.toThrow(new Error());
@@ -69,7 +69,7 @@ describe('Store controller', () => {
             expect(findSpy).toHaveBeenCalled();
         });
 
-        it('should throw if Store service throw errors', async () => {
+        it('should throw if Store service find all throw errors', async () => {
             jest.spyOn(service, 'findAll').mockRejectedValueOnce(new Error());
 
             await expect(controller.findAll()).rejects.toThrow(new Error());
@@ -93,6 +93,12 @@ describe('Store controller', () => {
             await controller.findById('randomid');
 
             expect(findSpy).toHaveBeenCalledWith('randomid');
+        });
+        
+        it('should throw if Store service find by id throw errors', async () => {
+            jest.spyOn(service, 'findById').mockRejectedValueOnce(new Error());
+
+            await expect(controller.findById('randomid')).rejects.toThrow(new Error());
         });
     });
 });
