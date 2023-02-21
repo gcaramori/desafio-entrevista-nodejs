@@ -12,7 +12,8 @@ describe('Store controller', () => {
             create: jest.fn(),
             findAll: jest.fn(),
             findById: jest.fn(),
-            update: jest.fn()
+            update: jest.fn(),
+            delete: jest.fn()
         }
 
         const module: TestingModule = await Test.createTestingModule({
@@ -128,6 +129,22 @@ describe('Store controller', () => {
             jest.spyOn(service, 'update').mockRejectedValueOnce(new Error());
 
             await expect(controller.update('randomid', updateStoreMock())).rejects.toThrow(new Error());
+        });
+    });
+
+    describe('delete a store', () => {
+        it('should call Store service delete with correct id', async () => {
+            const deleteSpy = jest.spyOn(service, 'delete');
+
+            await controller.delete('randomid');
+
+            expect(deleteSpy).toHaveBeenCalledWith('randomid');
+        });
+
+        it('should throw if Store service delete throw errors', async () => {
+            jest.spyOn(service, 'delete').mockRejectedValueOnce(new Error());
+
+            await expect(controller.delete('randomid')).rejects.toThrow(new Error())
         });
     });
 });
