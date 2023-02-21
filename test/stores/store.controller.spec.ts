@@ -11,7 +11,8 @@ describe('Store controller', () => {
         const mockService = {
             create: jest.fn(),
             findAll: jest.fn(),
-            findById: jest.fn()
+            findById: jest.fn(),
+            update: jest.fn()
         }
 
         const module: TestingModule = await Test.createTestingModule({
@@ -112,5 +113,21 @@ describe('Store controller', () => {
         });
     });
 
+    describe('update a store', () => {
+        it('should call Store service update with correct id and values', async () => {
+            const updateSpy = jest.spyOn(service, 'update');
+        
+            const mockParam = updateStoreMock();
+        
+            await controller.update('randomid', mockParam);
+        
+            expect(updateSpy).toHaveBeenCalledWith('randomid', mockParam);
+        });
 
+        it('should throws if Store service update throw errors', async () => {
+            jest.spyOn(service, 'update').mockRejectedValueOnce(new Error());
+
+            await expect(controller.update('randomid', updateStoreMock())).rejects.toThrow(new Error());
+        });
+    });
 });
