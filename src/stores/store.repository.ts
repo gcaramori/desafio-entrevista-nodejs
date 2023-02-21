@@ -31,11 +31,23 @@ export class StoreRepository {
         return store;
     }
 
-    async update(id: string, updateData: UpdateStoreDTO) {
-        await this.repository.update(id, updateData);
+    async update(id: string, updateData: UpdateStoreDTO): Promise<Store> {
+        const updatedStore = await this.repository.save({ id, updateData });
+
+        return updatedStore;
     }  
 
-    async delete(id: string) {
-        await this.repository.delete(id);
+    async delete(id: string): Promise<Store> {
+        const deletedData = this.repository.findOne({
+            where: { id: id }
+        });
+
+        await this.repository
+        .createQueryBuilder('stores')
+        .delete()
+        .where("id = :id", { id: id })
+        .execute();
+
+        return deletedData;
     }
 }

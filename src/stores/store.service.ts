@@ -22,11 +22,11 @@ export class StoreService {
         return this.storeRepository.findById(id);
     }
 
-    async update(id: string, updateData: UpdateStoreDTO) {
+    async update(id: string, updateData: UpdateStoreDTO): Promise<Store> {
         return this.storeRepository.update(id, updateData);
     }
 
-    async delete(id: string) {
+    async delete(id: string): Promise<Store> {
         return this.storeRepository.delete(id);
     }
 }

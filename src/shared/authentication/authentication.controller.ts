@@ -1,9 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-
-interface emailParam {
-    email: string;
-}
+import { CreateAuthDTO } from './authentication.dto';
 
 @Controller('/api/v1/auth')
 export class AuthenticationController {
@@ -12,7 +9,7 @@ export class AuthenticationController {
     ) {}
     
     @Post()
-    async grantAuthentication(@Body() email: emailParam) {
+    async grantAuthentication(@Body() email: CreateAuthDTO) {
         return this.authenticationService.getToken(email.email);
     }
 }

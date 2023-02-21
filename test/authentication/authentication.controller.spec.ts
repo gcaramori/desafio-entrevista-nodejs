@@ -1,5 +1,4 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { HttpException, HttpStatus } from "@nestjs/common";
 import { AuthenticationController } from "../../src/shared/authentication/authentication.controller";
 import { AuthenticationService } from "../../src/shared/authentication/authentication.service";
 

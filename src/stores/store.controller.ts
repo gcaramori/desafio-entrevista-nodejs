@@ -31,13 +31,13 @@ export class StoreController {
 
     @ApiBearerAuth()
     @Put(':id')
-    async update(@Param('id') id: string, @Body() updateData: UpdateStoreDTO): Promise<void> {
+    async update(@Param('id') id: string, @Body() updateData: UpdateStoreDTO): Promise<Store> {
         return this.storeService.update(id, updateData);
     }
 
     @ApiBearerAuth()
     @Delete(':id')
-    async delete(@Param('id') id: string) {
+    async delete(@Param('id') id: string): Promise<Store> {
         return this.storeService.delete(id);
     }
 }
