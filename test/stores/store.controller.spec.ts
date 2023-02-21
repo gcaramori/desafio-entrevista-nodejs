@@ -100,5 +100,17 @@ describe('Store controller', () => {
 
             await expect(controller.findById('randomid')).rejects.toThrow(new Error());
         });
+        
+        it('should return a Store on success', async () => {
+            const mockReturn = mockStore();
+
+            jest.spyOn(service, 'findById').mockResolvedValueOnce(mockReturn);
+
+            const response = await controller.findById('randomid');
+
+            expect(response).toEqual(mockReturn);
+        });
     });
+
+
 });
