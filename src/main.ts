@@ -13,6 +13,7 @@ async function bootstrap() {
     .setDescription('Teste Dr. Consulta')
     .setVersion('1.0')
     .addTag('car_park')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
 
