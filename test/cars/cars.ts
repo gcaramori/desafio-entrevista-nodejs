@@ -8,7 +8,8 @@ export const createCarMock = (): CreateCarDTO => ({
     model: 'random model',
     color: 'black',
     sign_code: 'ENL-2019',
-    type: 'Off-road'
+    type: 'Off-road',
+    storeId: 'randomstoreid'
 });
 
 export const updateCarMock = (): UpdateCarDTO => ({
@@ -18,6 +19,9 @@ export const updateCarMock = (): UpdateCarDTO => ({
     sign_code: 'ENL-2019',
     type: 'Off-road'
 });
+
+const storeMock  = new Store();
+storeMock.id = 'randomstoreid';
 
 export const mockCar = (): Car => ({
     id: 'randomid',
@@ -29,5 +33,5 @@ export const mockCar = (): Car => ({
     created_at: new Date(),
     updated_at: new Date(),
     deleted_at: new Date(),
-    store: new Store()
+    store: storeMock
 });

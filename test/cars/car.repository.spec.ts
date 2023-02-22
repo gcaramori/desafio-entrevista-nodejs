@@ -42,6 +42,7 @@ describe('Car repository', () => {
                 color: 'black',
                 sign_code: 'ENL-2019',
                 type: 'Off-road',
+                storeId: 'randomstoreid'
             })
 
             expect(response.id).toBeTruthy();
@@ -50,6 +51,7 @@ describe('Car repository', () => {
             expect(response.color).toBe('black');
             expect(response.sign_code).toBe('ENL-2019');
             expect(response.type).toBe('Off-road');
+            expect(response.store.id).toBe('randomstoreid');
         })
     });
 

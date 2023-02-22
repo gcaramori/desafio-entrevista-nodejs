@@ -20,4 +20,8 @@ export class CreateCarDTO {
     @IsString()
     @IsNotEmpty()
     type: string;
+
+    @IsString()
+    @IsNotEmpty()
+    storeId: string;
 }

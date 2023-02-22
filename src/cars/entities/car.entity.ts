@@ -30,7 +30,7 @@ export class Car {
     @DeleteDateColumn()
     deleted_at: Date;
 
-    @OneToOne(() => Store)
-    @JoinColumn()
+    @OneToOne(() => Store, (Store) => Store.id)
+    @JoinColumn({ name: 'id' })
     store: Store
 }
