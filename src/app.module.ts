@@ -2,6 +2,7 @@ import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { StoreModule } from './stores/store.module';
+import { Car } from './cars/entities/car.entity';
 import { Store } from './stores/entities/store.entity';
 import { AuthenticationModule } from './shared/authentication/authentication.module';
 import { AuthenticationMiddleware } from './shared/middleware/auth.middleware';
@@ -16,7 +17,7 @@ import { AuthenticationMiddleware } from './shared/middleware/auth.middleware';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Store],
+      entities: [Store, Car],
       synchronize: true
     }),
     AuthenticationModule,
