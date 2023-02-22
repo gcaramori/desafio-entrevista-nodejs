@@ -9,7 +9,7 @@ export const createCarMock = (): CreateCarDTO => ({
     color: 'black',
     sign_code: 'ENL-2019',
     type: 'Off-road',
-    storeId: 'randomstoreid'
+    store: 'randomstoreid'
 });
 
 export const updateCarMock = (): UpdateCarDTO => ({

@@ -32,9 +32,16 @@ export class StoreRepository {
     }
 
     async update(id: string, updateData: UpdateStoreDTO): Promise<Store> {
-        const updatedStore = await this.repository.save({ id, updateData });
+        const updatedStore = await this.repository
+        .createQueryBuilder()
+        .update(Store)
+        .set(updateData)
+        .where("id = :id", { id: id })
+        .execute();
 
-        return updatedStore;
+        return await this.repository.findOne({
+            where: { id: id }
+        });
     }  
 
     async delete(id: string): Promise<Store> {

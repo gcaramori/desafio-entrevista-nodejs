@@ -12,11 +12,25 @@ export class CarRepository {
     ){}
 
     async create(carData: CreateCarDTO): Promise<Car> {
-        const car = this.repository.create(carData);
-
-        await this.repository.save(car);
-
-        return car;
+        const car = await this.repository
+        .createQueryBuilder()
+        .insert()
+        .into(Car)
+        .values({
+            brand: carData.brand,
+            model: carData.model,
+            color: carData.color,
+            sign_code: carData.sign_code,
+            type: carData.type,
+            store: {
+                id: carData.store
+            },
+        })
+        .execute();
+        
+        return await this.repository.findOne({
+            where: { id: car.identifiers[0].id }
+        });
     }
 
     async findAll(): Promise<Car[]> {
@@ -32,9 +46,16 @@ export class CarRepository {
     }
 
     async update(id: string, updateData: UpdateCarDTO): Promise<Car> {
-        const updatedCar = await this.repository.save({ id, updateData });
+        const updatedCar = await this.repository
+        .createQueryBuilder()
+        .update(Car)
+        .set(updateData)
+        .where("id = :id", { id: id })
+        .execute();
 
-        return updatedCar;
+        return await this.repository.findOne({
+            where: { id: id }
+        });
     }  
 
     async delete(id: string): Promise<Car> {

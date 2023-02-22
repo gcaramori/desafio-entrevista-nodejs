@@ -1,6 +1,7 @@
 import { CreateStoreDTO } from "src/stores/dto/createStore.dto";
 import { UpdateStoreDTO } from "src/stores/dto/updateStore.dto";
-import { Store } from "src/stores/entities/store.entity";
+import { Store } from "../../src/stores/entities/store.entity";
+import { Car } from "../../src/cars/entities/car.entity";
 
 export const createStoreMock = (): CreateStoreDTO => ({
     name: 'random store',
@@ -30,5 +31,6 @@ export const mockStore = (): Store => ({
     qtyMotorcicles: 20,
     created_at: new Date(),
     updated_at: new Date(),
-    deleted_at: new Date()
+    deleted_at: new Date(),
+    car: [new Car()]
 });

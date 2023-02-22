@@ -15,8 +15,14 @@ describe('Store repository', () => {
             save: jest.fn(),
             find: jest.fn(),
             findOne: jest.fn(),
-            delete: jest.fn()
-        }
+            delete: jest.fn(),
+            createQueryBuilder: jest.fn(() => ({
+                update: jest.fn().mockReturnThis(),
+                set: jest.fn().mockReturnThis(),
+                where: jest.fn().mockReturnThis(),
+                execute: jest.fn().mockReturnThis()
+            }))
+        };
 
         const moduleRef = await Test.createTestingModule({
             providers: [
@@ -83,11 +89,11 @@ describe('Store repository', () => {
         it('should call mockRepository update with correct id', async () => {
             const mockParam = updateStoreMock();
 
-            const updateSpy = jest.spyOn(ormMock, 'save');
+            const updateSpy = jest.spyOn(ormMock, 'createQueryBuilder');
 
             await repository.update('randomid', mockParam);
 
-            expect(updateSpy).toHaveBeenCalledWith({ id: 'randomid', updateData: mockParam });
+            expect(updateSpy).toHaveBeenCalled();
         })
     });
 

@@ -15,8 +15,17 @@ describe('Car repository', () => {
             save: jest.fn(),
             find: jest.fn(),
             findOne: jest.fn(),
-            delete: jest.fn()
-        }
+            delete: jest.fn(),
+            createQueryBuilder: jest.fn(() => ({
+                insert: jest.fn().mockReturnThis(),
+                into: jest.fn().mockReturnThis(),
+                values: jest.fn().mockReturnThis(),
+                update: jest.fn().mockReturnThis(),
+                where: jest.fn().mockReturnThis(),
+                set: jest.fn().mockReturnThis(),
+                execute: jest.fn().mockReturnThis()
+            }))
+        };
 
         const moduleRef = await Test.createTestingModule({
             providers: [
@@ -34,7 +43,7 @@ describe('Car repository', () => {
 
     describe('creating a car', () => {
         it('should create a new car', async () => {
-            jest.spyOn(ormMock, 'create').mockReturnValueOnce(mockCar())
+            jest.spyOn(ormMock, 'createQueryBuilder');
 
             const response = await repository.create({
                 brand: 'random car',
@@ -42,7 +51,7 @@ describe('Car repository', () => {
                 color: 'black',
                 sign_code: 'ENL-2019',
                 type: 'Off-road',
-                storeId: 'randomstoreid'
+                store: 'randomstoreid'
             })
 
             expect(response.id).toBeTruthy();
@@ -83,11 +92,11 @@ describe('Car repository', () => {
         it('should call mockRepository update with correct id', async () => {
             const mockParam = updateCarMock();
 
-            const updateSpy = jest.spyOn(ormMock, 'save');
+            const updateSpy = jest.spyOn(ormMock, 'createQueryBuilder');
 
             await repository.update('randomid', mockParam);
 
-            expect(updateSpy).toHaveBeenCalledWith({ id: 'randomid', updateData: mockParam });
+            expect(updateSpy).toHaveBeenCalledWith('randomid', mockParam);
         })
     });
 

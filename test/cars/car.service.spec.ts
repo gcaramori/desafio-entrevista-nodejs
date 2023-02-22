@@ -14,7 +14,7 @@ describe('Car service', () => {
             findById: jest.fn(),
             update: jest.fn(),
             delete: jest.fn()
-        }
+        };
 
         const module: TestingModule = await Test.createTestingModule({
             providers: [

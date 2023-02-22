@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne } from 'typeorm';
 import { Store } from '../../stores/entities/store.entity';
 
 @Entity('cars')
@@ -30,7 +30,6 @@ export class Car {
     @DeleteDateColumn()
     deleted_at: Date;
 
-    @OneToOne(() => Store, (Store) => Store.id)
-    @JoinColumn({ name: 'id' })
+    @ManyToOne(() => Store, (store) => store.id)
     store: Store
 }
