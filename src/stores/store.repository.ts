@@ -38,15 +38,11 @@ export class StoreRepository {
     }  
 
     async delete(id: string): Promise<Store> {
-        const deletedData = this.repository.findOne({
+        const deletedData = await this.repository.findOne({
             where: { id: id }
         });
 
-        await this.repository
-        .createQueryBuilder('stores')
-        .delete()
-        .where("id = :id", { id: id })
-        .execute();
+        await this.repository.delete(id);
 
         return deletedData;
     }

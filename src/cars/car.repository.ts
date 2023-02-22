@@ -42,11 +42,7 @@ export class CarRepository {
             where: { id: id }
         });
 
-        await this.repository
-        .createQueryBuilder('cars')
-        .delete()
-        .where("id = :id", { id: id })
-        .execute();
+        await this.repository.delete(id);
 
         return deletedData;
     }

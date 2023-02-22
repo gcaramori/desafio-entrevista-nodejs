@@ -15,7 +15,6 @@ describe('Car repository', () => {
             save: jest.fn(),
             find: jest.fn(),
             findOne: jest.fn(),
-            update: jest.fn(),
             delete: jest.fn()
         }
 
@@ -82,11 +81,11 @@ describe('Car repository', () => {
         it('should call mockRepository update with correct id', async () => {
             const mockParam = updateCarMock();
 
-            const updateSpy = jest.spyOn(ormMock, 'update');    
+            const updateSpy = jest.spyOn(ormMock, 'save');
 
             await repository.update('randomid', mockParam);
 
-            expect(updateSpy).toHaveBeenCalledWith('randomid', mockParam);
+            expect(updateSpy).toHaveBeenCalledWith({ id: 'randomid', updateData: mockParam });
         })
     });
 
