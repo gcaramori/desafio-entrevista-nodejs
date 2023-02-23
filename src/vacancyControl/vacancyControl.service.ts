@@ -13,7 +13,7 @@ export class VacancyControlService {
         return this.vacancyControlRepository.registerEntry(vacancyData);
     }
 
-    async registerExit(vacancyData: CreateExitVacancyControlDTO) {
-        return await this.vacancyControlRepository.registerExit(vacancyData);
+    async registerExit(id: string, vacancyData: CreateExitVacancyControlDTO) {
+        return await this.vacancyControlRepository.registerExit(id, vacancyData);
     }
 }

@@ -13,7 +13,7 @@ export class VacancyControl {
     @Column('datetime')
     entryTime: Date;
     
-    @Column('datetime')
+    @Column('datetime', { default: null })
     exitTime: Date;
 
     @Column('varchar')
