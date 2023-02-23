@@ -10,15 +10,5 @@ export class CreateExitVacancyControlDTO {
     @ApiProperty()
     @IsDateString()
     @IsNotEmpty()
-    entryTime: Date;
-
-    @ApiProperty()
-    @IsString()
-    @IsNotEmpty()
-    vehicleId: string;
-
-    @ApiProperty()
-    @IsString()
-    @IsNotEmpty()
-    storeId: string;
+    exitTime: Date;
 }
