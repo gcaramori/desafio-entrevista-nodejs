@@ -1,9 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, HttpException, HttpStatus } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { CreateStoreDTO } from './dto/createStore.dto';
+import { UpdateStoreDTO } from './dto/updateStore.dto';
 import { Store } from './entities/store.entity';
 import { StoreService } from './store.service';
-import { UpdateStoreDTO } from './dto/updateStore.dto';
 
 @Controller('/api/v1/stores')
 export class StoreController {
@@ -14,6 +14,12 @@ export class StoreController {
     @ApiBearerAuth()
     @Post()
     async create(@Body() storeData: CreateStoreDTO): Promise<Store> {
+        const checkCnpj = await this.storeService.findByCnpj(storeData.cnpj);
+        
+        if(checkCnpj) {
+            throw new HttpException(`Store with CPNJ: ${storeData.cnpj} already exists!`, HttpStatus.NOT_ACCEPTABLE);
+        }
+
         return this.storeService.create(storeData);
     }
 

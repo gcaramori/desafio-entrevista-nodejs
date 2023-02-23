@@ -22,6 +22,10 @@ export class StoreService {
         return this.storeRepository.findById(id);
     }
 
+    async findByCnpj(cnpj: string): Promise<Store> {
+        return this.storeRepository.findByCnpj(cnpj);
+    }
+
     async update(id: string, updateData: UpdateStoreDTO): Promise<Store> {
         return this.storeRepository.update(id, updateData);
     }

@@ -1,10 +1,12 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { StoreModule } from './stores/store.module';
-import { CarModule } from './cars/car.module';
-import { Car } from './cars/entities/car.entity';
+import { Vehicle } from './vehicles/entities/vehicle.entity';
 import { Store } from './stores/entities/store.entity';
+import { VacancyControl } from './vacancyControl/entities/vacancyControl.entity';
+import { VehicleModule } from './vehicles/vehicle.module';
+import { StoreModule } from './stores/store.module';
+import { VacancyControlModule } from './vacancyControl/vacancyControl.module';
 import { AuthenticationModule } from './shared/authentication/authentication.module';
 import { AuthenticationMiddleware } from './shared/middleware/auth.middleware';
 
@@ -18,12 +20,13 @@ import { AuthenticationMiddleware } from './shared/middleware/auth.middleware';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Store, Car],
+      entities: [Store, Vehicle, VacancyControl],
       synchronize: true
     }),
     AuthenticationModule,
     StoreModule,
-    CarModule
+    VehicleModule,
+    VacancyControlModule
   ],
   controllers: [],
   providers: [],
@@ -32,6 +35,6 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthenticationMiddleware)
-      .forRoutes('/api/v1/stores', '/api/v1/cars');
+      .forRoutes('/api/v1/stores', '/api/v1/vehicles');
   }
 }

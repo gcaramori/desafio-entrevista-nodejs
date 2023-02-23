@@ -11,7 +11,7 @@ export class StoreRepository {
         @InjectRepository(Store) private readonly repository: Repository<Store>
     ){}
 
-    async create(storeData: CreateStoreDTO) {
+    async create(storeData: CreateStoreDTO): Promise<Store> {
         const store = this.repository.create(storeData);
 
         await this.repository.save(store);
@@ -26,6 +26,14 @@ export class StoreRepository {
     async findById(id: string): Promise<Store> {
         const store = await this.repository.findOne({
             where: { id: id }
+        });
+
+        return store;
+    }
+    
+    async findByCnpj(cnpj: string): Promise<Store> {
+        const store = await this.repository.findOne({
+            where: { cnpj: cnpj }
         });
 
         return store;

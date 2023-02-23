@@ -12,6 +12,7 @@ describe('Store service', () => {
             create: jest.fn(),
             findAll: jest.fn(),
             findById: jest.fn(),
+            findByCnpj: jest.fn(),
             update: jest.fn(),
             delete: jest.fn()
         };
@@ -109,6 +110,32 @@ describe('Store service', () => {
             jest.spyOn(service, 'findById').mockResolvedValueOnce(mockReturn);
 
             const response = await service.findById('randomid');
+
+            expect(response).toEqual(mockReturn);
+        });
+    });
+
+    describe('find a store by cnpj', () => {
+        it('should call Store repository find by cnpj correctly', async () => {
+            const findSpy = jest.spyOn(service, 'findByCnpj');
+
+            await service.findByCnpj('55.674.472/0001-11');
+
+            expect(findSpy).toHaveBeenCalledWith('55.674.472/0001-11');
+        });
+        
+        it('should throw if Store repository find by cnpj throw errors', async () => {
+            jest.spyOn(service, 'findByCnpj').mockRejectedValueOnce(new Error());
+
+            await expect(service.findByCnpj('55.674.472/0001-11')).rejects.toThrow(new Error());
+        });
+        
+        it('should return a Store on success', async () => {
+            const mockReturn = mockStore();
+
+            jest.spyOn(service, 'findByCnpj').mockResolvedValueOnce(mockReturn);
+
+            const response = await service.findByCnpj('55.674.472/0001-11');
 
             expect(response).toEqual(mockReturn);
         });

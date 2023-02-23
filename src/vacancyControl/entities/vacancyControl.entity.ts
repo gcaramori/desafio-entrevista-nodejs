@@ -1,39 +1,32 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Store } from '../../stores/entities/store.entity';
+import { Vehicle } from '../../vehicles/entities/vehicle.entity';
 
-@Entity('cars')
-export class Car {
+@Entity('vacancy_control')
+export class VacancyControl {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column('varchar')
-    brand: string;
+    status: string;
 
-    @Column('varchar')
-    model: string;
-
-    @Column('varchar')
-    color: string;
-
-    @Column('varchar')
-    sign_code: string;
-
-    @Column('varchar')
-    type: string;
+    @Column('datetime')
+    entryTime: Date;
+    
+    @Column('datetime')
+    exitTime: Date;
 
     @Column('varchar')
     storeId: string;
 
-    @CreateDateColumn()
-    created_at: Date;
-
-    @UpdateDateColumn()
-    updated_at: Date;
-
-    @DeleteDateColumn()
-    deleted_at: Date;
+    @Column('varchar')
+    vehicleId: string;
 
     @ManyToOne(() => Store, (store) => store.id)
     @JoinColumn({ name: 'storeId' })
     store: Store
+
+    @ManyToOne(() => Vehicle, (vehicle) => vehicle.id)
+    @JoinColumn({ name: 'vehicleId' })
+    vehicle: Vehicle
 }

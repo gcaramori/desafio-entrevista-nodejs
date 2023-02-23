@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
-import { Car } from '../../cars/entities/car.entity';
+import { Vehicle } from '../../vehicles/entities/vehicle.entity';
+import { VacancyControl } from '../../vacancyControl/entities/vacancyControl.entity';
 
 @Entity('stores')
 export class Store {
@@ -9,7 +10,7 @@ export class Store {
     @Column('varchar')
     name: string;
 
-    @Column('varchar')
+    @Column('varchar', { unique: true })
     cnpj: string;
 
     @Column('varchar')
@@ -33,6 +34,9 @@ export class Store {
     @DeleteDateColumn()
     deleted_at: Date;
 
-    @OneToMany(() => Car, (car) => car.store)
-    car: Car[]
+    @OneToMany(() => Vehicle, (vehicle) => vehicle.store)
+    vehicle: Vehicle[]
+
+    @OneToMany(() => VacancyControl, (vacantyControl) => vacantyControl.id)
+    vacantyControl: VacancyControl[]
 }

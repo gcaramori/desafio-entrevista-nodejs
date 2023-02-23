@@ -73,6 +73,18 @@ describe('Store repository', () => {
         })
     });
 
+    describe('find store by cnpj', () => {
+        it('should return a store', async () => {
+            const mockReturn = mockStore();
+
+            jest.spyOn(ormMock, 'findOne').mockResolvedValueOnce(mockReturn);
+
+            const response = await repository.findByCnpj('55.674.472/0001-11');
+
+            expect(response).toEqual(mockReturn);
+        })
+    });
+
     describe('update a store', () => {
         it('should call mockRepository update with correct id', async () => {
             const mockParam = updateStoreMock();
