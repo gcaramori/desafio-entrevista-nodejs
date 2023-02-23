@@ -19,7 +19,7 @@ export class VacancyControlController {
 
     @ApiBearerAuth()
     @Put('/api/v1/vacancies/exit/:id')
-    async registerExit(@Body() vacancyData: CreateExitVacancyControlDTO): Promise<VacancyControl> {
-        return await this.vacancyControlService.registerEntry(vacancyData);
+    async registerExit(@Param() id: string, @Body() vacancyData: CreateExitVacancyControlDTO): Promise<VacancyControl> {
+        return await this.vacancyControlService.registerExit(id, vacancyData);
     }
 }

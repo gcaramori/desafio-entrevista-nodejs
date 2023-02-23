@@ -46,7 +46,7 @@ describe('Store repository', () => {
             expect(response.telephone).toBe('(19) 97858-3232');
             expect(response.qtyCars).toBe(10);
             expect(response.qtyMotorcicles).toBe(20);
-        })
+        });
     });
 
     describe('find all stores', () => {
@@ -58,7 +58,7 @@ describe('Store repository', () => {
           const response = await repository.findAll();
     
           expect(response).toEqual(mockReturn);
-        })
+        });
     });
 
     describe('find store by id', () => {
@@ -70,7 +70,7 @@ describe('Store repository', () => {
             const response = await repository.findById('randomid');
 
             expect(response).toEqual(mockReturn);
-        })
+        });
     });
 
     describe('find store by cnpj', () => {
@@ -82,7 +82,7 @@ describe('Store repository', () => {
             const response = await repository.findByCnpj('55.674.472/0001-11');
 
             expect(response).toEqual(mockReturn);
-        })
+        });
     });
 
     describe('update a store', () => {
@@ -94,7 +94,7 @@ describe('Store repository', () => {
             await repository.update('randomid', mockParam);
 
             expect(updateSpy).toHaveBeenCalledWith('randomid', mockParam);
-        })
+        });
     });
 
     describe('delete a store', () => {
@@ -104,6 +104,6 @@ describe('Store repository', () => {
           await repository.delete('randomid');
     
           expect(deleteSpy).toHaveBeenCalledWith('randomid');
-        })
+        });
     });
 })

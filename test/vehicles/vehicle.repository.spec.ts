@@ -46,7 +46,7 @@ describe('Vehicle repository', () => {
             expect(response.sign_code).toBe('ENL-2019');
             expect(response.type).toBe('Off-road');
             expect(response.storeId).toBe('randomstoreid');
-        })
+        });
     });
 
     describe('find all vehicles', () => {
@@ -58,7 +58,7 @@ describe('Vehicle repository', () => {
           const response = await repository.findAll();
     
           expect(response).toEqual(mockReturn);
-        })
+        });
     });
 
     describe('find vehicle by id', () => {
@@ -70,7 +70,7 @@ describe('Vehicle repository', () => {
             const response = await repository.findById('randomid');
 
             expect(response).toEqual(mockReturn);
-        })
+        });
     });
 
     describe('update a vehicle', () => {
@@ -82,7 +82,7 @@ describe('Vehicle repository', () => {
             await repository.update('randomid', mockParam);
 
             expect(updateSpy).toHaveBeenCalledWith('randomid', mockParam);
-        })
+        });
     });
 
     describe('delete a vehicle', () => {
@@ -92,6 +92,6 @@ describe('Vehicle repository', () => {
           await repository.delete('randomid');
     
           expect(deleteSpy).toHaveBeenCalledWith('randomid');
-        })
+        });
     });
 })
