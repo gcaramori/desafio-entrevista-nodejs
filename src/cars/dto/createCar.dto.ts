@@ -23,5 +23,5 @@ export class CreateCarDTO {
 
     @IsString()
     @IsNotEmpty()
-    store: string;
+    storeId: string;
 }

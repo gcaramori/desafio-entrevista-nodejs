@@ -3,13 +3,16 @@ import { UpdateCarDTO } from "src/cars/dto/updateCar.dto";
 import { Car } from "../../src/cars/entities/car.entity";
 import { Store } from "../../src/stores/entities/store.entity";
 
+const storeMock  = new Store();
+storeMock.id = 'randomstoreid';
+
 export const createCarMock = (): CreateCarDTO => ({
     brand: 'random car',
     model: 'random model',
     color: 'black',
     sign_code: 'ENL-2019',
     type: 'Off-road',
-    store: 'randomstoreid'
+    storeId: 'randomstoreid'
 });
 
 export const updateCarMock = (): UpdateCarDTO => ({
@@ -20,9 +23,6 @@ export const updateCarMock = (): UpdateCarDTO => ({
     type: 'Off-road'
 });
 
-const storeMock  = new Store();
-storeMock.id = 'randomstoreid';
-
 export const mockCar = (): Car => ({
     id: 'randomid',
     brand: 'random car',
@@ -30,6 +30,7 @@ export const mockCar = (): Car => ({
     color: 'black',
     sign_code: 'ENL-2019',
     type: 'Off-road',
+    storeId: 'randomstoreid',
     created_at: new Date(),
     updated_at: new Date(),
     deleted_at: new Date(),

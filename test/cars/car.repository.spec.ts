@@ -1,9 +1,11 @@
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { mockCar, updateCarMock } from './cars';
+import { createCarMock, mockCar, updateCarMock } from './cars';
 import { Car } from '../../src/cars/entities/car.entity';
 import { CarRepository } from '../../src/cars/car.repository';
+import { Store } from '../../src/stores/entities/store.entity';
+import { CreateCarDTO } from 'src/cars/dto/createCar.dto';
 
 describe('Car repository', () => {
     let repository: CarRepository;
@@ -13,18 +15,10 @@ describe('Car repository', () => {
         const mockOrmRepository = {
             create: jest.fn(),
             save: jest.fn(),
+            update: jest.fn(),
             find: jest.fn(),
             findOne: jest.fn(),
-            delete: jest.fn(),
-            createQueryBuilder: jest.fn(() => ({
-                insert: jest.fn().mockReturnThis(),
-                into: jest.fn().mockReturnThis(),
-                values: jest.fn().mockReturnThis(),
-                update: jest.fn().mockReturnThis(),
-                where: jest.fn().mockReturnThis(),
-                set: jest.fn().mockReturnThis(),
-                execute: jest.fn().mockReturnThis()
-            }))
+            delete: jest.fn()
         };
 
         const moduleRef = await Test.createTestingModule({
@@ -43,16 +37,9 @@ describe('Car repository', () => {
 
     describe('creating a car', () => {
         it('should create a new car', async () => {
-            jest.spyOn(ormMock, 'createQueryBuilder');
+            jest.spyOn(ormMock, 'save').mockResolvedValueOnce(mockCar());
 
-            const response = await repository.create({
-                brand: 'random car',
-                model: 'random model',
-                color: 'black',
-                sign_code: 'ENL-2019',
-                type: 'Off-road',
-                store: 'randomstoreid'
-            })
+            const response = await repository.create(createCarMock());
 
             expect(response.id).toBeTruthy();
             expect(response.brand).toBe('random car');
@@ -60,7 +47,7 @@ describe('Car repository', () => {
             expect(response.color).toBe('black');
             expect(response.sign_code).toBe('ENL-2019');
             expect(response.type).toBe('Off-road');
-            expect(response.store.id).toBe('randomstoreid');
+            expect(response.storeId).toBe('randomstoreid');
         })
     });
 
@@ -91,8 +78,8 @@ describe('Car repository', () => {
     describe('update a car', () => {
         it('should call mockRepository update with correct id', async () => {
             const mockParam = updateCarMock();
-
-            const updateSpy = jest.spyOn(ormMock, 'createQueryBuilder');
+            
+            const updateSpy = jest.spyOn(ormMock, 'update');
 
             await repository.update('randomid', mockParam);
 

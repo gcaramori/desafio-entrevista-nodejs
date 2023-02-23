@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Store } from '../../stores/entities/store.entity';
 
 @Entity('cars')
@@ -21,6 +21,9 @@ export class Car {
     @Column('varchar')
     type: string;
 
+    @Column('varchar')
+    storeId: string;
+
     @CreateDateColumn()
     created_at: Date;
 
@@ -31,5 +34,6 @@ export class Car {
     deleted_at: Date;
 
     @ManyToOne(() => Store, (store) => store.id)
+    @JoinColumn({ name: 'storeId' })
     store: Store
 }

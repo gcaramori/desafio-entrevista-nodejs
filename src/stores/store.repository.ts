@@ -32,16 +32,13 @@ export class StoreRepository {
     }
 
     async update(id: string, updateData: UpdateStoreDTO): Promise<Store> {
-        const updatedStore = await this.repository
-        .createQueryBuilder()
-        .update(Store)
-        .set(updateData)
-        .where("id = :id", { id: id })
-        .execute();
+        const user = await this.repository.update(id, updateData);
 
-        return await this.repository.findOne({
+        const returnUser = await this.repository.findOne({
             where: { id: id }
         });
+
+        return returnUser;
     }  
 
     async delete(id: string): Promise<Store> {

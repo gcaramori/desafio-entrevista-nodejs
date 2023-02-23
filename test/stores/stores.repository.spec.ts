@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { mockStore, updateStoreMock } from './stores';
+import { Repository, UpdateResult, UpdateQueryBuilder } from 'typeorm';
+import { createStoreMock, mockStore, updateStoreMock } from './stores';
 import { Store } from '../../src/stores/entities/store.entity';
 import { StoreRepository } from '../../src/stores/store.repository';
 
@@ -13,15 +13,10 @@ describe('Store repository', () => {
         const mockOrmRepository = {
             create: jest.fn(),
             save: jest.fn(),
+            update: jest.fn(),
             find: jest.fn(),
             findOne: jest.fn(),
-            delete: jest.fn(),
-            createQueryBuilder: jest.fn(() => ({
-                update: jest.fn().mockReturnThis(),
-                set: jest.fn().mockReturnThis(),
-                where: jest.fn().mockReturnThis(),
-                execute: jest.fn().mockReturnThis()
-            }))
+            delete: jest.fn()
         };
 
         const moduleRef = await Test.createTestingModule({
@@ -42,14 +37,7 @@ describe('Store repository', () => {
         it('should create a new store', async () => {
             jest.spyOn(ormMock, 'create').mockReturnValueOnce(mockStore())
 
-            const response = await repository.create({
-                name: 'random store',
-                cnpj: '55.674.472/0001-11',
-                address: 'Rua Olivio Belinate, 147',
-                telephone: '(19) 97858-3232',
-                qtyCars: 10,
-                qtyMotorcicles: 20
-            })
+            const response = await repository.create(createStoreMock());
 
             expect(response.id).toBeTruthy();
             expect(response.name).toBe('random store');
@@ -88,12 +76,12 @@ describe('Store repository', () => {
     describe('update a store', () => {
         it('should call mockRepository update with correct id', async () => {
             const mockParam = updateStoreMock();
-
-            const updateSpy = jest.spyOn(ormMock, 'createQueryBuilder');
+            
+            const updateSpy = jest.spyOn(ormMock, 'update');
 
             await repository.update('randomid', mockParam);
 
-            expect(updateSpy).toHaveBeenCalled();
+            expect(updateSpy).toHaveBeenCalledWith('randomid', mockParam);
         })
     });
 
