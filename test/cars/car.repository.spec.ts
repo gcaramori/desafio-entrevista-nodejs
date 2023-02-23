@@ -4,8 +4,6 @@ import { Repository } from 'typeorm';
 import { createCarMock, mockCar, updateCarMock } from './cars';
 import { Car } from '../../src/cars/entities/car.entity';
 import { CarRepository } from '../../src/cars/car.repository';
-import { Store } from '../../src/stores/entities/store.entity';
-import { CreateCarDTO } from 'src/cars/dto/createCar.dto';
 
 describe('Car repository', () => {
     let repository: CarRepository;
