@@ -16,4 +16,8 @@ export class VacancyControlService {
     async registerExit(id: string, vacancyData: CreateExitVacancyControlDTO) {
         return await this.vacancyControlRepository.registerExit(id, vacancyData);
     }
+
+    async getSummary() {
+        return await this.vacancyControlRepository.getSummary();
+    }
 }

@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 import { Store } from '../../stores/entities/store.entity';
 import { VacancyControl } from '../../vacancyControl/entities/vacancyControl.entity';
 
-@Entity('cars')
+@Entity('vehicles')
 export class Vehicle {
     @PrimaryGeneratedColumn('uuid')
     id: string;

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Repository,  } from "typeorm";
 import { VacancyControl } from "./entities/vacancyControl.entity";
 import { CreateEntryVacancyControlDTO } from "./dto/createEntryVacancyControl.dto";
 import { CreateExitVacancyControlDTO } from "./dto/createExitVacancyControl.dto";
@@ -23,5 +23,15 @@ export class VacancyControlRepository {
         return await this.repository.findOne({
             where: { id: id }
         });
+    }
+
+    async getSummary(): Promise<VacancyControl[]> {
+        return await this.repository
+        .createQueryBuilder('vacancy_control')  
+        .innerJoin('vacancy_control.vehicle', 'vehicles')
+        .addSelect('COUNT(CASE WHEN vacancy_control.entryTime IS NOT NULL THEN 1 END)', 'totalEntry')
+        .addSelect('COUNT(CASE WHEN vacancy_control.exitTime IS NOT NULL THEN 1 END)', 'totalExit')
+        .groupBy('vacancy_control.vehicle')
+        .getRawMany();
     }
 }

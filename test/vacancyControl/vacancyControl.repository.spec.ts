@@ -14,7 +14,13 @@ describe('VacancyControl repository', () => {
             create: jest.fn(),
             save: jest.fn(),
             update: jest.fn(),
-            findOne: jest.fn()
+            findOne: jest.fn(),
+            createQueryBuilder: jest.fn(() => ({
+                innerJoin: jest.fn().mockReturnThis(),
+                addSelect: jest.fn().mockReturnThis(),
+                groupBy: jest.fn().mockReturnThis(),
+                getRawMany: jest.fn().mockReturnThis()
+            }))
         };
 
         const moduleRef = await Test.createTestingModule({
@@ -54,6 +60,16 @@ describe('VacancyControl repository', () => {
             await repository.registerExit('randomid', mockParam);
 
             expect(updateSpy).toHaveBeenCalledWith('randomid', mockParam);
+        });
+    });
+
+    describe('get a summary of entry and exit', () => {
+        it('should return a summary of entry and exit', async () => {
+            const mockReturn = [mockVacancyControl()];
+
+            const findSpy = jest.spyOn(ormMock, 'createQueryBuilder').mockResolvedValueOnce(mockReturn);
+
+            expect(findSpy).toEqual(mockReturn);
         });
     });
 })
