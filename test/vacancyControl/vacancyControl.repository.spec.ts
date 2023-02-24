@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { createEntryRegistryMock, createExitRegistryMock, mockVacancyControl } from './vacancyControl';
+import { createEntryRegistryMock, createExitRegistryMock, mockVacancyControl, mockVacancyControlSummary } from './vacancyControl';
 import { VacancyControl } from '../../src/vacancyControl/entities/vacancyControl.entity';
 import { VacancyControlRepository } from '../../src/vacancyControl/vacancyControl.repository';
 
@@ -15,12 +15,7 @@ describe('VacancyControl repository', () => {
             save: jest.fn(),
             update: jest.fn(),
             findOne: jest.fn(),
-            createQueryBuilder: jest.fn(() => ({
-                innerJoin: jest.fn().mockReturnThis(),
-                addSelect: jest.fn().mockReturnThis(),
-                groupBy: jest.fn().mockReturnThis(),
-                getRawMany: jest.fn().mockReturnThis()
-            }))
+            createQueryBuilder: jest.fn()
         };
 
         const moduleRef = await Test.createTestingModule({
@@ -65,11 +60,20 @@ describe('VacancyControl repository', () => {
 
     describe('get a summary of entry and exit', () => {
         it('should return a summary of entry and exit', async () => {
-            const mockReturn = [mockVacancyControl()];
+            jest.spyOn(ormMock, "createQueryBuilder").mockImplementation(() => {
+                const original = jest.requireActual("typeorm");
 
-            const findSpy = jest.spyOn(ormMock, 'createQueryBuilder').mockResolvedValueOnce(mockReturn);
-
-            expect(findSpy).toEqual(mockReturn);
+                return {
+                  ...original,
+                  createQueryBuilder: jest.fn().mockImplementation(() => ({
+                    innerJoin: jest.fn().mockReturnThis(),
+                    addSelect: jest.fn().mockReturnThis(),
+                    groupBy: jest.fn().mockReturnThis(),
+                    getRawMany: jest.fn()
+                      .mockResolvedValue(mockVacancyControlSummary())
+                  })),
+                };
+            });
         });
     });
-})
+});
