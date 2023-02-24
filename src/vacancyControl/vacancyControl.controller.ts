@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, HttpException, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { CreateEntryVacancyControlDTO } from "./dto/createEntryVacancyControl.dto";
 import { CreateExitVacancyControlDTO } from "./dto/createExitVacancyControl.dto";
@@ -19,8 +19,14 @@ export class VacancyControlController {
 
     @ApiBearerAuth()
     @Get('/api/v1/vacancies/summary')
-    async getSummary() {
+    async getSummary(): Promise<VacancyControl[]> {
         return await this.vacancyControlService.getSummary();
+    }
+
+    @ApiBearerAuth()
+    @Get('/api/v1/vacancies/summaryByHour')
+    async getSummaryByHour(): Promise<VacancyControl[]> {
+        return await this.vacancyControlService.getSummaryByHour();
     }
 
     @ApiBearerAuth()

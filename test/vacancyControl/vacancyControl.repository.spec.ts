@@ -64,11 +64,31 @@ describe('VacancyControl repository', () => {
                 const original = jest.requireActual("typeorm");
 
                 return {
-                  ...original,
-                  createQueryBuilder: jest.fn().mockImplementation(() => ({
+                    ...original,
+                    createQueryBuilder: jest.fn().mockImplementation(() => ({
                     innerJoin: jest.fn().mockReturnThis(),
+                    select: jest.fn().mockReturnThis(),
                     addSelect: jest.fn().mockReturnThis(),
                     groupBy: jest.fn().mockReturnThis(),
+                    getRawMany: jest.fn()
+                      .mockResolvedValue(mockVacancyControlSummary())
+                  })),
+                };
+            });
+        });
+
+        it('should return a summary of entry and exit by hour', async () => {
+            jest.spyOn(ormMock, "createQueryBuilder").mockImplementation(() => {
+                const original = jest.requireActual("typeorm");
+
+                return {
+                    ...original,
+                    createQueryBuilder: jest.fn().mockImplementation(() => ({
+                    innerJoin: jest.fn().mockReturnThis(),
+                    select: jest.fn().mockReturnThis(),
+                    addSelect: jest.fn().mockReturnThis(),
+                    groupBy: jest.fn().mockReturnThis(),
+                    orderBy: jest.fn().mockReturnThis(),
                     getRawMany: jest.fn()
                       .mockResolvedValue(mockVacancyControlSummary())
                   })),

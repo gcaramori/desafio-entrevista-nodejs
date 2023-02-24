@@ -36,14 +36,10 @@ export const mockVacancyControl = (): VacancyControl => ({
 export const mockVacancyControlSummary = (): any => (
     [
         {
-          vacancy_control_id: "randomid",
-          vacancy_control_status: "randomstatus",
-          vacancy_control_entryTime: "2023-01-01T00:00:00.000Z",
-          vacancy_control_exitTime: "2023-01-01T00:00:00.000Z",
-          vacancy_control_storeId: "randomstoreid",
-          vacancy_control_vehicleId: "randomvehicleid",
-          totalEntry: "1",
-          totalExit: "1"
+            storeId: "randomstoreid",
+            storeName: "randomstorename",
+            totalEntry: "1",
+            totalExit: "1"
         }
     ]
 );
